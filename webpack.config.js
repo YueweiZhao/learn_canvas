@@ -1,12 +1,14 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const miniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
 
   entry: {
-    index: "./src/js/index.js",
+    clock: path.resolve(__dirname, "src/clock/js/index.js"),
+    pig: path.resolve(__dirname, "src/pig/js/index.js"),
   },
 
   output: {
@@ -28,6 +30,7 @@ module.exports = {
         test: /\.(sass|scss|less|css)$/,
         // use会按照从前向后的顺序执行loader
         use: [
+          miniCssExtractPlugin.loader,
           {
             loader: "css-loader",
           },
@@ -69,15 +72,27 @@ module.exports = {
     // html打包插件
     new htmlWebpackPlugin({
       // 要打包的html文件路径
-      template: "./src/index.html",
+      template: "./src/clock/index.html",
       // 输出的文件名
-      filename: "index.html",
+      filename: "clock/index.html",
       // html要引入的chunk名称（入口），对应entry中的key
-      chunks: ["index"],
+      chunks: ["clock"],
+    }),
+    new htmlWebpackPlugin({
+      // 要打包的html文件路径
+      template: "./src/pig/index.html",
+      // 输出的文件名
+      filename: "pig/index.html",
+      // html要引入的chunk名称（入口），对应entry中的key
+      chunks: ["pig"],
     }),
 
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["**/*"],
+    }),
+
+    new miniCssExtractPlugin({
+      filename: "assets/[name]-[chunkhash:6].css",
     }),
   ],
 
