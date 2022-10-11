@@ -1,8 +1,10 @@
 canvas { 
-  border: 1px solid black; 
+  border: 1px solid black;
+  background-color: #B0AFAC;
 }
 .main {
   width: 100%;
+  background-color: #1E2428;
   height: 100vh;
   display: flex;
   align-items: center;

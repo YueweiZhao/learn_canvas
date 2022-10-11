@@ -1,5 +1,5 @@
-const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const htmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -9,6 +9,7 @@ module.exports = {
   entry: {
     clock: path.resolve(__dirname, "src/clock/js/index.js"),
     pig: path.resolve(__dirname, "src/pig/js/index.js"),
+    ikun: path.resolve(__dirname, "src/ikun/js/index.js"),
   },
 
   output: {
@@ -17,7 +18,7 @@ module.exports = {
     // 输出文件的路径
     path: path.resolve(__dirname, "dist/"),
     // 输出的文件名，[name]代表输入文件名
-    filename: "assets/[name]-[chunkhash:6].js",
+    filename: "[name]/assets/index-[chunkhash:6].js",
     // 静态bundle文件名称
     assetModuleFilename: "static/image/[name][ext]",
   },
@@ -86,13 +87,22 @@ module.exports = {
       // html要引入的chunk名称（入口），对应entry中的key
       chunks: ["pig"],
     }),
+    new htmlWebpackPlugin({
+      // 要打包的html文件路径
+      template: "./src/ikun/index.html",
+      // 输出的文件名
+      filename: "ikun/index.html",
+      // html要引入的chunk名称（入口），对应entry中的key
+      chunks: ["ikun"],
+    }),`
 
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ["**/*"],
     }),
 
     new miniCssExtractPlugin({
-      filename: "assets/[name]-[chunkhash:6].css",
+      filename: "[name]/assets/index-[chunkhash:6].css",
+      chunkFilename: "[id].css",
     }),
   ],
 

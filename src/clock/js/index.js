@@ -2,7 +2,7 @@ import "../style/index.css";
 
 function clock() {
   var now = new Date();
-  var ctx = document.getElementById("tutorial").getContext("2d");
+  var ctx = document.getElementById("canvas").getContext("2d");
   ctx.save();
   ctx.clearRect(0, 0, 150, 150);
   ctx.translate(75, 75);
